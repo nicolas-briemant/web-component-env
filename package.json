@@ -1,0 +1,33 @@
+{
+  "name": "web-component-env",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "es6",
+    "babel",
+    "eslint",
+    "npm",
+    "webpack",
+    "mocha",
+    "chai",
+    "less",
+    "postcss"
+  ],
+  "author": "Nicolas Briemant",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "commander": "^2.9.0",
+    "cross-spawn-async": "^2.1.9",
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.1"
+  },
+  "bin": {
+    "wce": "./src/wce"
+  }
+}

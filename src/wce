@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+
+const VERSION = require('../package.json');
+
+program
+  .version(VERSION)
+  .command('lint', 'eslint following airbnb rules')
+  .parse(process.argv);

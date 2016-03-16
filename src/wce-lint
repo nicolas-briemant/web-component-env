@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const path = require('path');
+const spawn = require('cross-spawn-async');
+const chalk = require('chalk');
+
+const srcPattern = 'src/**/*.js*';
+const testPattern = 'test/**/*.js*';
+
+program
+  .option('-p, --pattern [file|dir|glob]*', 'eslint a specific pattern')
+  .parse(process.argv);
+
+var wcePath = path.dirname(__dirname);
+var configPath = path.join(wcePath, '.eslintrc');
+var lintCmd = path.join(wcePath, './node_modules/.bin/eslint');
+var lintArgs = (
+  program.pattern ? [program.pattern] : [srcPattern, testPattern]
+).concat('--config', configPath, '--color');
+
+var lint = spawn(lintCmd, lintArgs);
+
+lint.stdout.on('data', data => console.log(data.toString()));
+lint.stderr.on('data', data => console.log(chalk.red(data.toString())));
+lint.on('close', code => {});
