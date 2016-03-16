@@ -10,4 +10,5 @@ program
   .version(VERSION)
   .command('lint', 'eslint following airbnb rules')
   .command('clean', 'cross-platform remove')
+  .command('build', 'compile into npm (lib) and umd (dist) standards')
   .parse(process.argv);

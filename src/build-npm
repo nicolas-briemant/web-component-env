@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const path = require('path');
+const spawn = require('cross-spawn-async');
+const chalk = require('chalk');
+
+const SRC = 'try';
+const LIB = 'lib';
+
+program.parse(process.argv);
+
+const babelCmd = './node_modules/.bin/babel';
+const babelArgs = [SRC, '--out-dir', LIB, '--presets', 'es2015,react,stage-0'];
+
+process.stdout.write(chalk.gray('---npm---', '\n'));
+process.stdout.write(chalk.blue('   babel', babelArgs.join(' '), '\n'));
+var babel = spawn(babelCmd, babelArgs);
+
+babel.stdout.on('data', data => process.stdout.write(data.toString()));
+babel.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
+babel.on('close', code => process.stdout.write(chalk.gray('---npm done---', '\n')));

@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const path = require('path');
+const spawn = require('cross-spawn-async');
+const chalk = require('chalk');
+
+const SRC = 'src';
+const DIST = 'dist';
+
+program.parse(process.argv);
+
+//const wcePath = path.dirname(__dirname);
+//const configPath = path.join(wcePath, '.eslintrc');
+const babelCmd = './node_modules/.bin/babel';
+const babelArgs = [SRC, '--out-dir', LIB];
+
+process.stdout.write(chalk.gray('---npm---', '\n'));
+process.stdout.write(chalk.blue('   umd:', SRC, '->', DIST, '\n'));
+var babel = spawn(babelCmd, babelArgs);
+
+babel.stdout.on('data', data => process.stdout.write(data.toString()));
+babel.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
+babel.on('close', code => process.stdout.write(chalk.gray('---npm done---', '\n')));
