@@ -19,10 +19,10 @@ const lintCmd = './node_modules/.bin/eslint';
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const lintArgs = pattern.concat('--config', configPath, '--color');
 
-console.log(chalk.gray.bgWhite('---linting---'));
-console.log(chalk.blue('pattern:', pattern.join(' and ')));
+process.stdout.write(chalk.gray('---linting---', '\n'));
+process.stdout.write(chalk.blue('   eslint', pattern.join(' '), '\n'));
 var lint = spawn(lintCmd, lintArgs);
 
-lint.stdout.on('data', data => console.log(data.toString()));
-lint.stderr.on('data', data => console.log(chalk.red(data.toString())));
-lint.on('close', code => console.log(chalk.gray.bgWhite('---linting done---')));
+lint.stdout.on('data', data => process.stdout.write(data.toString()));
+lint.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
+lint.on('close', code => process.stdout.write(chalk.gray('---linting done---', '\n')));
