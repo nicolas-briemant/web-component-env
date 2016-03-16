@@ -12,10 +12,10 @@ program
   .option('-p, --pattern [file|dir|glob]*', 'eslint a specific pattern')
   .parse(process.argv);
 
-var wcePath = path.dirname(__dirname);
-var configPath = path.join(wcePath, '.eslintrc');
-var lintCmd = path.join(wcePath, './node_modules/.bin/eslint');
-var lintArgs = (
+const wcePath = path.dirname(__dirname);
+const configPath = path.join(wcePath, '.eslintrc');
+const lintCmd = './node_modules/.bin/eslint';
+const lintArgs = (
   program.pattern ? [program.pattern] : [srcPattern, testPattern]
 ).concat('--config', configPath, '--color');
 
