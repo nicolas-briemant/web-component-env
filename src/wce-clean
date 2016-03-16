@@ -16,10 +16,10 @@ const cleanCmd = './node_modules/.bin/rimraf';
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const cleanArgs = pattern;
 
-console.log(chalk.gray.bgWhite('---cleaning---'));
-console.log(chalk.blue('pattern:', pattern.join(' and ')));
+process.stdout.write(chalk.gray('---cleaning---', '\n'));
+process.stdout.write(chalk.blue('   rimraf', pattern.join(' '), '\n'));
 var clean = spawn(cleanCmd, cleanArgs);
 
-clean.stdout.on('data', data => console.log(data.toString()));
-clean.stderr.on('data', data => console.log(chalk.red(data.toString())));
-clean.on('close', code => console.log(chalk.gray.bgWhite('---cleaning done---')));
+clean.stdout.on('data', data => process.stdout.write(data.toString()));
+clean.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
+clean.on('close', code => process.stdout.write(chalk.gray('---cleaning done---', '\n')));
