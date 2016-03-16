@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+process.env.FORCE_COLOR = true;
+
 const program = require('commander');
 
 const VERSION = require('../package.json');
@@ -7,4 +9,5 @@ const VERSION = require('../package.json');
 program
   .version(VERSION)
   .command('lint', 'eslint following airbnb rules')
+  .command('clean', 'cross-platform remove')
   .parse(process.argv);

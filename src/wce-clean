@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const spawn = require('cross-spawn-async');
+const chalk = require('chalk');
+
+const LIB = 'lib';
+const DIST = 'dist';
+const defaultPattern = [LIB, DIST];
+
+program
+  .option('-p, --pattern [file|dir|glob]*', 'clean a specific pattern')
+  .parse(process.argv);
+
+const cleanCmd = './node_modules/.bin/rimraf';
+const pattern = program.pattern ? [program.pattern] : defaultPattern;
+const cleanArgs = pattern;
+
+console.log(chalk.gray.bgWhite('---cleaning---'));
+console.log(chalk.blue('pattern:', pattern.join(' and ')));
+var clean = spawn(cleanCmd, cleanArgs);
+
+clean.stdout.on('data', data => console.log(data.toString()));
+clean.stderr.on('data', data => console.log(chalk.red(data.toString())));
+clean.on('close', code => console.log(chalk.gray.bgWhite('---cleaning done---')));
