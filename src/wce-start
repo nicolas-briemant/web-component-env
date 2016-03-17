@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const path = require('path');
+const childProcess = require('child_process');
+const chalk = require('chalk');
+
+program
+  .option('-p, --port <n>', 'set the port', parseInt)
+  .parse(process.argv);
+
+const nodeCmd = 'node';
+const wcePath = path.dirname(__dirname);
+const scriptPath = path.join(wcePath, 'dev-server.js');
+const nodeArgs = scriptPath;
+
+process.stdout.write(chalk.gray('---starting dev env---', '\n'));
+process.stdout.write(chalk.gray('   kill+[enter] to properly end the process', '\n'));
+var node = childProcess.exec([nodeCmd, scriptPath].join(' '));
+
+process.stdin.on('readable', () => {
+  var chunk = process.stdin.read().toString();
+  if (chunk === 'kill\n') {
+    kill(node.pid);
+  } else {
+    process.stdout.write(chalk.yellow('   unknown command: ', chunk));
+    process.stdout.write(chalk.gray('   kill+[enter] to properly end the process', '\n'));
+  }
+})
+node.stdout.on('data', data => process.stdout.write(data.toString()));
+node.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
+
+const kill = (pid) => {
+  process.stdout.write(chalk.gray('---killing dev env---', '\n'));
+  const isWin = /^win/.test(process.platform);
+  if (isWin) {
+    childProcess.exec(
+      'taskkill /PID ' + pid + ' /T /F',
+      (error, stdout, stderr) => {
+        process.stdout.write(chalk.gray('---goodbye---', '\n'));
+        process.exit();
+      }
+    );
+  } else {
+    process.kill(pid, 'SIGKILL');
+    process.stdout.write(chalk.gray('---goodbye---', '\n'));
+  }
+};

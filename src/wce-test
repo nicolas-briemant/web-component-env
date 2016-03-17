@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const path = require('path');
+const spawn = require('cross-spawn-async');
+const chalk = require('chalk');
+
+const TEST = 'test/**/*.js*';
+const defaultPattern = [TEST];
+
+program
+  .option('-p, --pattern [file|dir|glob]*', 'test a specific pattern')
+  .parse(process.argv);
+
+const wcePath = path.dirname(__dirname);
+const mochaBabelHookPath = path.join(wcePath, 'mocha-babel-hook');
+const testCmd = './node_modules/.bin/_mocha';
+const pattern = program.pattern ? [program.pattern] : defaultPattern;
+const testArgs = pattern.concat(
+  '--require', mochaBabelHookPath,
+  '--recursive',
+  '--colors',
+  '--check-leaks',
+  '--reporter', 'list'
+);
+
+process.stdout.write(chalk.gray('---testing---', '\n'));
+process.stdout.write(chalk.blue('   mocha', pattern.join(' '), '\n'));
+var test = spawn(testCmd, testArgs);
+
+test.stdout.on('data', data => process.stdout.write(data.toString()));
+test.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
+test.on('close', code => process.stdout.write(chalk.gray('---testing done---', '\n')));
