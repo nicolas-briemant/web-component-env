@@ -6,7 +6,7 @@ const spawn = require('cross-spawn-async');
 const chalk = require('chalk');
 const babelConfig = require('../babel-config');
 
-const SRC = 'try';
+const SRC = 'src';
 const LIB = 'lib';
 
 program.parse(process.argv);

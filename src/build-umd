@@ -7,7 +7,7 @@ const path = require('path');
 const spawn = require('cross-spawn-async');
 const chalk = require('chalk');
 
-const SRC = 'try';
+const SRC = 'src';
 const DIST = 'dist';
 
 program.parse(process.argv);
