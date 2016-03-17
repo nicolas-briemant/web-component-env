@@ -33,7 +33,7 @@ var config = {
       {
         test: /\.jsx?/,
         loader: 'babel',
-        include: path.join(__dirname, 'try'),
+        include: path.join(__dirname, 'src'),
         query: { presets: babelPresets }
       },
       {
@@ -58,7 +58,7 @@ var config = {
 
 if (env === 'production') {
   config.devtool = 'source-map';
-  config.entry = ['./try/app'];
+  config.entry = ['./src/app'];
   config.output.publicPath = 'dist/';
   config.plugins = [
     new webpack.optimize.OccurenceOrderPlugin(),
