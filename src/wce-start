@@ -19,8 +19,8 @@ process.stdout.write(chalk.gray('   kill+[enter] to properly end the process', '
 var node = childProcess.exec([nodeCmd, scriptPath].join(' '));
 
 process.stdin.on('readable', () => {
-  var chunk = process.stdin.read().toString();
-  if (chunk === 'kill\n') {
+  var chunk = process.stdin.read();
+  if (chunk && chunk.toString() === 'kill\n') {
     kill(node.pid);
   } else {
     process.stdout.write(chalk.yellow('   unknown command: ', chunk));
@@ -34,15 +34,14 @@ const kill = (pid) => {
   process.stdout.write(chalk.gray('---killing dev env---', '\n'));
   const isWin = /^win/.test(process.platform);
   if (isWin) {
-    childProcess.exec(
-      'taskkill /PID ' + pid + ' /T /F',
-      (error, stdout, stderr) => {
-        process.stdout.write(chalk.gray('---goodbye---', '\n'));
-        process.exit();
-      }
-    );
+    childProcess.exec('taskkill /PID ' + pid + ' /T /F', bye);
   } else {
     process.kill(pid, 'SIGKILL');
-    process.stdout.write(chalk.gray('---goodbye---', '\n'));
+    bye();
   }
 };
+
+const bye = (error, stdout, stderr) => {
+  process.stdout.write(chalk.gray('---goodbye---', '\n'));
+  process.exit();
+}
