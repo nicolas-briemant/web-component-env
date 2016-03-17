@@ -14,7 +14,7 @@ var config = {
   entry: [
     'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client',
-    './try/app'
+    './src/app'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
