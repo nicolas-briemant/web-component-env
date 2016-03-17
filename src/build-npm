@@ -4,6 +4,7 @@ const program = require('commander');
 const path = require('path');
 const spawn = require('cross-spawn-async');
 const chalk = require('chalk');
+const babelConfig = require('../babel-config');
 
 const SRC = 'try';
 const LIB = 'lib';
@@ -11,7 +12,8 @@ const LIB = 'lib';
 program.parse(process.argv);
 
 const babelCmd = './node_modules/.bin/babel';
-const babelArgs = [SRC, '--out-dir', LIB, '--presets', 'es2015,react,stage-0'];
+const babelPresets = babelConfig.presets.join(',');
+const babelArgs = [SRC, '--out-dir', LIB, '--presets', babelPresets];
 
 process.stdout.write(chalk.gray('---npm---', '\n'));
 process.stdout.write(chalk.blue('   babel', babelArgs.join(' '), '\n'));
