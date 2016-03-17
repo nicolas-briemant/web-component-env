@@ -3,11 +3,10 @@
 process.env.FORCE_COLOR = true;
 
 const program = require('commander');
-
-const VERSION = require('../package.json');
+const package = require('../package.json');
 
 program
-  .version(VERSION)
+  .version(`${package.name}@${package.version}`)
   .command('lint', 'eslint following airbnb rules')
   .command('clean', 'cross-platform remove')
   .command('build', 'compile into npm (lib) and umd (dist) standards')
