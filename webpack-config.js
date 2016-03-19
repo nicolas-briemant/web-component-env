@@ -17,7 +17,7 @@ var config = {
     './src/app'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.resolve('./dist'),
     filename: 'app.js',
     publicPath: '/static/'
   },
@@ -33,7 +33,7 @@ var config = {
       {
         test: /\.jsx?/,
         loader: 'babel',
-        include: path.join(__dirname, 'src'),
+        include: path.resolve('./src'),
         query: { presets: babelPresets }
       },
       {
