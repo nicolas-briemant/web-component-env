@@ -16,7 +16,7 @@ const wcePath = path.dirname(__dirname);
 const configPath = path.join(wcePath, 'webpack-config.js');
 const crossEnvCmd = './node_modules/.bin/cross-env';
 const webpackCmd = './node_modules/.bin/webpack';
-const webpackCmdAndArgs = [webpackCmd, '--config', configPath, '--progress'];
+const webpackCmdAndArgs = [webpackCmd, '--config', configPath];
 
 process.stdout.write(chalk.gray('---umd---', '\n'));
 process.stdout.write(chalk.blue('   umd:', SRC, '->', DIST, '\n'));
