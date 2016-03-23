@@ -2,7 +2,7 @@
 
 ## Setup
 
-`npm install --global https://github.com/nicolas-briemant/web-component-env.git`
+*TODO*
 
 ## Usage
 
