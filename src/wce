@@ -7,6 +7,7 @@ const package = require('../package.json');
 
 program
   .version(`${package.name}@${package.version}`)
+  .command('init', 'create folders & files')
   .command('lint', 'eslint following airbnb rules')
   .command('clean', 'cross-platform remove')
   .command('build', 'compile into npm (lib) and umd (dist) standards')
