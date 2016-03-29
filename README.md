@@ -6,7 +6,7 @@
 
 Provide an up and running env for developing web components.
 
-> note: web component is a react, react/redux component.
+> a web component is a react, react/redux component.
 
 ## Features
 
@@ -24,4 +24,4 @@ Provide an up and running env for developing web components.
 
 `./node_modules/.bin/wce`
 
-> note: you are free to create an alias or install the package globally.
+> you are free to create an alias or install the package globally.
