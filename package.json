@@ -57,5 +57,8 @@
   },
   "bin": {
     "wce": "./src/wce"
+  },
+  "engines" : {
+    "npm" : "^3.4.1"
   }
 }
