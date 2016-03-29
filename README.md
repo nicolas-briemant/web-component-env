@@ -6,7 +6,7 @@
 
 Provide an up and running env for developing web components.
 
-> note: web component design a react, react/redux component.
+> note: web component is a react, react/redux component.
 
 ## Features
 
