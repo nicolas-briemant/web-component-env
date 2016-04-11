@@ -1,7 +1,7 @@
 {
   "name": "web-component-env",
   "description": "Automation env for web components",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +19,14 @@
     "postcss"
   ],
   "author": "Nicolas Briemant",
+  "homepage": "https://github.com/nicolas-briemant/web-component-env",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicolas-briemant/web-component-env.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nicolas-briemant/web-component-env/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "babel-cli": "^6.6.5",
