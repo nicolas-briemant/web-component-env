@@ -51,6 +51,10 @@ var config = {
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
+      },
+      {
+        test: /\.(png|jpe?g)$/,
+        loader: 'url-loader?limit=100000'
       }
     ]
   }
