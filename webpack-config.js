@@ -31,7 +31,7 @@ var config = {
   module: {
     loaders: [
       {
-        test: /\.jsx?/,
+        test: /\.jsx?$/,
         loader: 'babel',
         include: path.resolve('./src'),
         query: { presets: babelPresets }
