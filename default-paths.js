@@ -1,8 +1,10 @@
 const path = require('path');
 
-exports default {
+const paths = {
   bin: path.join('node_modules', '.bin'),
   src: 'src',
   lib: 'lib',
   dist: 'dist'
 };
+
+module.exports = paths;

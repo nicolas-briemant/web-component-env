@@ -3,6 +3,7 @@
 const program = require('commander');
 const spawn = require('cross-spawn-async');
 const chalk = require('chalk');
+const path = require('path');
 const paths = require('../default-paths');
 
 const defaultPattern = [paths.lib, paths.dist];
