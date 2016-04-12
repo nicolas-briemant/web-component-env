@@ -1,7 +1,7 @@
 {
   "name": "web-component-env",
   "description": "Automation env for web components",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -47,7 +47,7 @@
     "cross-spawn-async": "^2.1.9",
     "css-loader": "^0.23.1",
     "eslint": "^2.4.0",
-    "eslint-config-airbnb": "^6.1.0",
+    "eslint-config-airbnb": "^7.0.0",
     "eslint-plugin-react": "^4.2.1",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.13.4",
