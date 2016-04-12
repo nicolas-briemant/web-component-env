@@ -16,7 +16,7 @@ const write = (path, data) => {
 
 program.parse(process.argv);
 
-process.stdout.write(chalk.gray('---initializing---2', '\n'));
+process.stdout.write(chalk.gray('---initializing---', '\n'));
 const folders = [
   'src/actions',
   'src/assets',

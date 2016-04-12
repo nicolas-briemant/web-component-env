@@ -5,15 +5,13 @@ const path = require('path');
 const spawn = require('cross-spawn-async');
 const chalk = require('chalk');
 const babelConfig = require('../babel-config');
-
-const SRC = 'src';
-const LIB = 'lib';
+const paths = require('../default-paths');
 
 program.parse(process.argv);
 
-const babelCmd = './node_modules/.bin/babel';
+const babelCmd = path.join(paths.bin, 'babel');
 const babelPresets = babelConfig.presets.join(',');
-const babelArgs = [SRC, '--out-dir', LIB, '--presets', babelPresets];
+const babelArgs = [paths.src, '--out-dir', paths.lib, '--presets', babelPresets];
 
 process.stdout.write(chalk.gray('---npm---', '\n'));
 process.stdout.write(chalk.blue('   babel', babelArgs.join(' '), '\n'));

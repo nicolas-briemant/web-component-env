@@ -3,16 +3,15 @@
 const program = require('commander');
 const spawn = require('cross-spawn-async');
 const chalk = require('chalk');
+const paths = require('../default-paths');
 
-const LIB = 'lib';
-const DIST = 'dist';
-const defaultPattern = [LIB, DIST];
+const defaultPattern = [paths.lib, paths.dist];
 
 program
   .option('-p, --pattern [file|dir|glob]*', 'clean a specific pattern')
   .parse(process.argv);
 
-const cleanCmd = './node_modules/.bin/rimraf';
+const cleanCmd = path.join(paths.bin, 'rimraf');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const cleanArgs = pattern;
 

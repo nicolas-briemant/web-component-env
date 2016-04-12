@@ -4,6 +4,7 @@ const program = require('commander');
 const path = require('path');
 const spawn = require('cross-spawn-async');
 const chalk = require('chalk');
+const paths = require('../default-paths');
 
 const TEST = 'test/**/*.js*';
 const defaultPattern = [TEST];
@@ -14,7 +15,7 @@ program
 
 const wcePath = path.dirname(__dirname);
 const mochaBabelHookPath = path.join(wcePath, 'mocha-babel-hook');
-const testCmd = './node_modules/.bin/_mocha';
+const testCmd = path.join(paths.bin, '_mocha');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const testArgs = pattern.concat(
   '--require', mochaBabelHookPath,

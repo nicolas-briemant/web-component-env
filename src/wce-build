@@ -5,10 +5,6 @@ const path = require('path');
 const spawn = require('cross-spawn');
 const chalk = require('chalk');
 
-const SRC = 'src';
-const LIB = 'lib';
-const DIST = 'dist';
-
 program.parse(process.argv);
 
 const wcePath = path.dirname(__dirname);

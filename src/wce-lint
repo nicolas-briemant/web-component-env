@@ -4,6 +4,7 @@ const program = require('commander');
 const path = require('path');
 const spawn = require('cross-spawn-async');
 const chalk = require('chalk');
+const paths = require('../default-paths');
 
 const SRC = 'src/**/*.js*';
 const TEST = 'test/**/*.js*';
@@ -15,7 +16,7 @@ program
 
 const wcePath = path.dirname(__dirname);
 const configPath = path.join(wcePath, '.eslintrc');
-const lintCmd = './node_modules/.bin/eslint';
+const lintCmd = path.join(paths.bin, 'eslint');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const lintArgs = pattern.concat('--config', configPath, '--color');
 
