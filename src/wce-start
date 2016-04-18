@@ -19,6 +19,8 @@ program
   .option('-p, --port <n>', 'set the port', parseInt)
   .parse(process.argv);
 
+process.env.PORT = program.port;
+
 const nodeCmd = 'node';
 const wcePath = path.dirname(__dirname);
 const scriptPath = path.join(wcePath, 'dev-server.js');
