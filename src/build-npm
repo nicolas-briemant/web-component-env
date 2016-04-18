@@ -4,6 +4,7 @@ const program = require('commander');
 const path = require('path');
 const spawn = require('cross-spawn-async');
 const chalk = require('chalk');
+const fs = require('fs-extra');
 const babelConfig = require('../babel-config');
 const paths = require('../default-paths');
 
@@ -15,6 +16,13 @@ const babelArgs = [paths.src, '--out-dir', paths.lib, '--presets', babelPresets]
 
 process.stdout.write(chalk.gray('---npm---', '\n'));
 process.stdout.write(chalk.blue('   babel', babelArgs.join(' '), '\n'));
+
+try {
+  fs.copySync(path.join(paths.src, 'assets'), path.join(paths.lib, 'assets'));
+} catch(err) {
+  process.stdout.write(chalk.red('   cp', 'unable to cp assets', '\n'));
+}
+
 var babel = spawn(babelCmd, babelArgs);
 
 babel.stdout.on('data', data => process.stdout.write(data.toString()));

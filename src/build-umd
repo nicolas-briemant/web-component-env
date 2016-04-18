@@ -17,7 +17,7 @@ const webpackCmd = path.join(paths.bin, 'webpack');
 const webpackCmdAndArgs = [webpackCmd, '--config', configPath];
 
 process.stdout.write(chalk.gray('---umd---', '\n'));
-process.stdout.write(chalk.blue('   umd:', paths.src, '->', paths.dist, '\n'));
+process.stdout.write(chalk.blue('   webpack', paths.src, '->', paths.dist, '\n'));
 var webpack = spawn(crossEnvCmd, webpackCmdAndArgs);
 
 webpack.stdout.on('data', data => process.stdout.write(data.toString()));
