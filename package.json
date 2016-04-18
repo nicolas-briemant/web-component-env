@@ -1,7 +1,7 @@
 {
   "name": "web-component-env",
   "description": "Automation env for web components",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,7 +17,8 @@
     "chai",
     "less",
     "postcss",
-    "boilerplate"
+    "boilerplate",
+    "hmr"
   ],
   "author": "Nicolas Briemant",
   "homepage": "https://github.com/nicolas-briemant/web-component-env",
