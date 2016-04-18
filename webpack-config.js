@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 const babelConfig = require('./babel-config');
 
 const env = process.env.NODE_ENV;
@@ -32,17 +33,21 @@ var config = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         include: path.resolve('./src'),
         query: { presets: babelPresets }
       },
       {
         test: /\.less$/,
-        loader: 'style!css!less'
+        loader: 'style-loader!css-loader!postcss-loader!less-loader'
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader!postcss-loader'
       },
       {
         test: /\.json$/,
-        loader: 'json'
+        loader: 'json-loader'
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -57,7 +62,10 @@ var config = {
         loader: 'url-loader?limit=100000'
       }
     ]
-  }
+  },
+  postcss: [
+    autoprefixer({ browsers: ['last 2 versions'] })
+  ]
 };
 
 if (env === 'production') {

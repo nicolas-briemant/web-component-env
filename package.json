@@ -1,7 +1,7 @@
 {
   "name": "web-component-env",
   "description": "Automation env for web components",
-  "version": "1.0.13",
+  "version": "1.1.13",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +30,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "autoprefixer": "^6.3.6",
     "babel-cli": "^6.6.5",
     "babel-core": "^6.7.2",
     "babel-loader": "^6.2.4",
@@ -57,6 +58,7 @@
     "less-loader": "^2.2.2",
     "mkdirp": "^0.5.1",
     "mocha": "^2.4.5",
+    "postcss-loader": "^0.8.2",
     "rimraf": "^2.5.2",
     "style-loader": "^0.13.0",
     "tree-kill": "^1.0.0",
