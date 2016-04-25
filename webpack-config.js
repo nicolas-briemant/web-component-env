@@ -5,7 +5,6 @@ const babelConfig = require('./babel-config');
 
 const env = process.env.NODE_ENV;
 
-const babelPresets = babelConfig.presets.join(',');
 const defaultPlugins = [
   new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(env) })
 ];
@@ -35,7 +34,7 @@ var config = {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         include: path.resolve('./src'),
-        query: { presets: babelPresets }
+        query: babelConfig
       },
       {
         test: /\.less$/,
