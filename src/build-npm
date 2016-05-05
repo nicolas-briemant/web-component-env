@@ -11,8 +11,15 @@ const paths = require('../default-paths');
 program.parse(process.argv);
 
 const babelCmd = path.join(paths.bin, 'babel');
-const babelPresets = babelConfig.presets.join(',');
-const babelArgs = [paths.src, '--out-dir', paths.lib, '--presets', babelPresets];
+const babelArgs = [
+  paths.src,
+  '--out-dir',
+  paths.lib,
+  '--presets',
+  babelConfig.presets.join(','),
+  '--plugins',
+  babelConfig.plugins.join(',')
+];
 
 process.stdout.write(chalk.gray('---npm---', '\n'));
 process.stdout.write(chalk.blue('   babel', babelArgs.join(' '), '\n'));

@@ -5,10 +5,4 @@ var config = {
   "plugins": ["transform-decorators-legacy"]
 }
 
-/*
-if (process.env.NODE_ENV === 'development') {
-  config.presets.concat('react-hmre');
-}
-*/
-
 module.exports = config;
