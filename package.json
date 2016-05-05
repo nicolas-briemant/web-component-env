@@ -54,8 +54,6 @@
     "eslint-plugin-import": "^1.5.0",
     "eslint-plugin-jsx-a11y": "^0.6.2",
     "eslint-plugin-react": "^5.0.1",
-    "eventsource-polyfill": "^0.9.6",
-    "express": "^4.13.4",
     "file-loader": "^0.8.5",
     "fs-extra": "^0.28.0",
     "json-loader": "^0.5.4",
@@ -69,8 +67,8 @@
     "tree-kill": "^1.0.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
-    "webpack-dev-middleware": "^1.5.1",
-    "webpack-hot-middleware": "^2.10.0"
+    "webpack-dev-server": "^1.14.1",
+    "webpack-merge": "^0.12.0"
   },
   "bin": {
     "wce": "./src/wce"

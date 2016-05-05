@@ -1,30 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
+const merge = require('webpack-merge');
 const autoprefixer = require('autoprefixer');
 const babelConfig = require('./babel-config');
 
 const env = process.env.NODE_ENV;
 
-const defaultPlugins = [
-  new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(env) })
-];
-
-var config = {
-  devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'eventsource-polyfill', // necessary for hot reloading with IE
-    'webpack-hot-middleware/client',
-    './src/app'
-  ],
-  output: {
-    path: path.resolve('./dist'),
-    filename: 'app.js',
-    publicPath: '/static/'
+const common = {
+  entry: {
+    app: path.resolve('./src/app')
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ].concat(defaultPlugins),
+  output: {
+    filename: 'app.js'
+  },
   resolve: {
     extensions: ['', '.jsx', '.js']
   },
@@ -38,27 +26,33 @@ var config = {
       },
       {
         test: /\.less$/,
-        loader: 'style-loader!css-loader!postcss-loader!less-loader'
+        loader: 'style-loader!css-loader!postcss-loader!less-loader',
+        include: path.resolve('./src'),
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader!postcss-loader'
+        loader: 'style-loader!css-loader!postcss-loader',
+        include: path.resolve('./src'),
       },
       {
         test: /\.json$/,
-        loader: 'json-loader'
+        loader: 'json-loader',
+        include: path.resolve('./src'),
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+        include: path.resolve('./src'),
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader'
+        loader: 'file-loader',
+        include: path.resolve('./src'),
       },
       {
         test: /\.(png|jpe?g)$/,
-        loader: 'url-loader?limit=100000'
+        loader: 'url-loader?limit=100000',
+        include: path.resolve('./src'),
       }
     ]
   },
@@ -67,21 +61,44 @@ var config = {
   ]
 };
 
-if (env === 'production') {
-  config.devtool = 'source-map';
-  config.entry = ['./src/app'];
-  config.output.publicPath = 'dist/';
-  config.plugins = [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        pure_getters: true,
-        unsafe: true,
-        unsafe_comps: true,
-        warnings: false
-      }
-    })
-  ].concat(defaultPlugins);
+if(env === 'development' || !env) {
+  module.exports = merge(common, {
+    devtool: 'eval-source-map',
+    output: {
+      path: path.resolve('./build')
+    },
+    devServer: {
+      contentBase: path.resolve('./build'),
+      historyApiFallback: true,
+      hot: true,
+      inline: true,
+      progress: true,
+      stats: 'errors-only',
+      host: process.env.HOST,
+      port: process.env.PORT
+    },
+    plugins: [
+      new webpack.HotModuleReplacementPlugin()
+    ]
+  });
 }
 
-module.exports = config;
+if(env === 'production') {
+  module.exports = merge(common, {
+    devtool: 'source-map',
+    output: {
+      path: path.resolve('./dist')
+    },
+    plugins: [
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        compressor: {
+          pure_getters: true,
+          unsafe: true,
+          unsafe_comps: true,
+          warnings: false
+        }
+      })
+    ]
+  });
+}

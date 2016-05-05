@@ -5,6 +5,9 @@ const path = require('path');
 const childProcess = require('child_process');
 const chalk = require('chalk');
 const treeKill = require('tree-kill');
+const spawn = require('cross-spawn');
+const paths = require('../default-paths');
+const fs = require('fs-extra');
 
 const killHelp = () => {
   process.stdout.write(chalk.gray('   kill+[enter] to properly end the process', '\n'));
@@ -15,35 +18,16 @@ const bye = (error, stdout, stderr) => {
   process.exit();
 };
 
-program
-  .option('-p, --port <n>', 'set the port', parseInt)
-  .parse(process.argv);
-
-process.env.PORT = program.port;
-
-const nodeCmd = 'node';
-const wcePath = path.dirname(__dirname);
-const scriptPath = path.join(wcePath, 'dev-server.js');
-const nodeArgs = scriptPath;
-
-process.stdout.write(chalk.gray('---starting dev env---', '\n'));
-killHelp();
-var node = childProcess.exec([nodeCmd, scriptPath].join(' '));
-
-process.stdin.on('readable', () => {
-  var chunk = process.stdin.read();
-  if (!chunk) return;
-  if (chunk.toString() === 'kill\n') {
-    kill(node.pid);
-  } else {
-    process.stdout.write(chalk.yellow('   unknown command: ', chunk));
-    killHelp();
-  }
-})
-node.stdout.on('data', data => process.stdout.write(data.toString()));
-node.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
+const clean = () => {
+  spawn.sync(
+    path.join(path.dirname(__dirname), 'src/wce-clean'),
+    ['--pattern', 'build'],
+    { stdio: 'inherit' }
+  );
+};
 
 const kill = (pid) => {
+  clean();
   const isWin = /^win/.test(process.platform);
   process.stdout.write(chalk.gray('---killing dev env---', '\n'));
   process.stdout.write(chalk.blue('   pid:', pid, '\n'));
@@ -57,3 +41,38 @@ const kill = (pid) => {
     });
   }
 };
+
+program
+  .option('-h, --host <n>', 'set the host')
+  .option('-p, --port <n>', 'set the port', parseInt)
+  .parse(process.argv);
+
+process.env.PORT = program.port || 3000;
+process.env.HOST = program.host || '0.0.0.0';
+
+const wcePath = path.dirname(__dirname);
+const webpackDevServerConfig = path.join(wcePath, 'webpack-config.js');
+const webpackDevServerCmd = path.join(wcePath, paths.bin, 'webpack-dev-server');
+
+process.stdout.write(chalk.gray('---starting dev env---', '\n'));
+clean();
+fs.copySync(path.join(wcePath, 'index.html'), path.join('build', 'index.html'));
+
+killHelp();
+var webpackDevServer = childProcess.exec([
+  webpackDevServerCmd,
+  '--config', webpackDevServerConfig
+].join(' '));
+
+process.stdin.on('readable', () => {
+  var chunk = process.stdin.read();
+  if (!chunk) return;
+  if (chunk.toString() === 'kill\n') {
+    kill(webpackDevServer.pid);
+  } else {
+    process.stdout.write(chalk.yellow('   unknown command: ', chunk));
+    killHelp();
+  }
+})
+webpackDevServer.stdout.on('data', data => process.stdout.write(data.toString()));
+webpackDevServer.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
