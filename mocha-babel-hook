@@ -1,6 +1,3 @@
 #!/usr/bin/env node
 
-const babelConfig = require('./babel-config');
-const babelPresets = babelConfig.presets.join(',');
-
-require("babel-core/register")({ presets: babelPresets });
+require("babel-core/register")(require('./babel-config'));
