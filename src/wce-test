@@ -19,20 +19,27 @@ const mochaBabelHookPath = path.join(wcePath, 'mocha-babel-hook');
 const nycCmd = path.join(wcePath, paths.bin, 'nyc');
 const mochaCmd = path.join(wcePath, paths.bin, '_mocha');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
-const testArgs = [
+const nycArgs = [
   '--require', mochaBabelHookPath,
-  '--recursive',
-  '--check-leaks',
+  '--include', 'src',
+  '--all',
   '--reporter', 'text'
 ];
+const mochaArgs = [
+  pattern,
+  '--colors',
+  '--recursive',
+  '--check-leaks'
+];
+const nycCmdArgs = [].concat(nycArgs, mochaCmd, mochaArgs);
+const nycArgsLabel = ['--require mochaBabelHookPath'].concat(nycArgs.slice(2)).join(' ');
 
 process.stdout.write(chalk.gray('---testing---', '\n'));
-process.stdout.write(chalk.blue('   mocha', pattern.join(' '), '\n'));
+process.stdout.write(chalk.blue('   nyc', nycArgsLabel, '\n'));
+process.stdout.write(chalk.blue('   mocha', mochaArgs.join(' '), '\n'));
 try {
   fs.accessSync('test', fs.F_OK);
-
-  var test = spawn(nycCmd, testArgs.concat([mochaCmd, pattern]));
-
+  var test = spawn(nycCmd, nycCmdArgs);
   test.stdout.on('data', data => process.stdout.write(data.toString()));
   test.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
   test.on('close', code => process.stdout.write(chalk.gray('---testing done---', '\n')));
