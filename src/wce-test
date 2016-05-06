@@ -16,22 +16,22 @@ program
 
 const wcePath = path.dirname(__dirname);
 const mochaBabelHookPath = path.join(wcePath, 'mocha-babel-hook');
-const testCmd = path.join(paths.bin, '_mocha');
+const nycCmd = path.join(wcePath, paths.bin, 'nyc');
+const mochaCmd = path.join(wcePath, paths.bin, '_mocha');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
-const testArgs = pattern.concat(
+const testArgs = [
   '--require', mochaBabelHookPath,
   '--recursive',
-  '--colors',
   '--check-leaks',
-  '--reporter', 'list'
-);
+  '--reporter', 'text'
+];
 
 process.stdout.write(chalk.gray('---testing---', '\n'));
 process.stdout.write(chalk.blue('   mocha', pattern.join(' '), '\n'));
 try {
-  fs.accessSync('text', fs.F_OK);
+  fs.accessSync('test', fs.F_OK);
 
-  var test = spawn(testCmd, testArgs);
+  var test = spawn(nycCmd, testArgs.concat([mochaCmd, pattern]));
 
   test.stdout.on('data', data => process.stdout.write(data.toString()));
   test.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
