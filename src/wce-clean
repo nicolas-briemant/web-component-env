@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const path = require('path');
 const paths = require('../default-paths');
 
-const defaultPattern = [paths.lib, paths.dist];
+const defaultPattern = [paths.build, paths.lib, paths.dist];
 
 program
   .option('-p, --pattern [file|dir|glob]*', 'clean a specific pattern')
