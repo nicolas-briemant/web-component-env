@@ -32,8 +32,10 @@ folders.forEach(mkdirp.sync);
 const gitIgnored = [
   'node_modules',
   'npm-debug.log',
+  'build',
   'dist',
   'lib',
+  '.nyc_output'
 ];
 process.stdout.write(chalk.blue('   .gitignore', '\n'));
 write('.gitignore', gitIgnored.join('\n'));
