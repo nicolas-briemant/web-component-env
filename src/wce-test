@@ -16,8 +16,8 @@ program
 
 const wcePath = path.dirname(__dirname);
 const mochaBabelHookPath = path.join(wcePath, 'mocha-babel-hook');
-const nycCmd = path.join(wcePath, paths.bin, 'nyc');
-const mochaCmd = path.join(wcePath, paths.bin, '_mocha');
+const nycCmd = path.join(paths.bin, 'nyc');
+const mochaCmd = path.join(paths.bin, '_mocha');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const nycArgs = [
   '--require', mochaBabelHookPath,

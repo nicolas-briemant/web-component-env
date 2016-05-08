@@ -52,7 +52,7 @@ process.env.HOST = program.host || '0.0.0.0';
 
 const wcePath = path.dirname(__dirname);
 const webpackDevServerConfig = path.join(wcePath, 'webpack-config.js');
-const webpackDevServerCmd = path.join(wcePath, paths.bin, 'webpack-dev-server');
+const webpackDevServerCmd = path.join(paths.bin, 'webpack-dev-server');
 
 process.stdout.write(chalk.gray('---starting dev env---', '\n'));
 clean();
