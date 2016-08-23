@@ -21,38 +21,32 @@ const common = {
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        include: path.resolve('./src'),
+        exclude: path.resolve('./node_modules'),
         query: babelConfig
       },
       {
         test: /\.less$/,
-        loader: 'style-loader!css-loader!postcss-loader!less-loader',
-        include: path.resolve('./src'),
+        loader: 'style-loader!css-loader!postcss-loader!less-loader'
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader!postcss-loader',
-        include: path.resolve('./src'),
+        loader: 'style-loader!css-loader!postcss-loader'
       },
       {
         test: /\.json$/,
-        loader: 'json-loader',
-        include: path.resolve('./src'),
+        loader: 'json-loader'
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff',
-        include: path.resolve('./src'),
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader',
-        include: path.resolve('./src'),
+        loader: 'file-loader'
       },
       {
         test: /\.(png|jpe?g)$/,
-        loader: 'url-loader?limit=100000',
-        include: path.resolve('./src'),
+        loader: 'url-loader?limit=100000'
       }
     ]
   },
@@ -85,7 +79,7 @@ if(env === 'development' || !env) {
 
 if(env === 'production') {
   module.exports = merge(common, {
-    devtool: 'source-map',
+    devtool: 'cheap-module-source-map',
     output: {
       path: path.resolve('./dist')
     },
