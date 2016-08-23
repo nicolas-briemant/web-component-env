@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+process.env.NODE_ENV = 'development';
+
 const program = require('commander');
 const path = require('path');
 const childProcess = require('child_process');
