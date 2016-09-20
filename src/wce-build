@@ -6,29 +6,14 @@ const spawn = require('cross-spawn');
 const chalk = require('chalk');
 const paths = require('../default-paths');
 
-program
-  .option('-t, --type <type>', 'build type (all (default), npm, umd)', /^all|umd|npm$/i, 'all')
-  .parse(process.argv);
+program.parse(process.argv);
 
 const wcePath = path.dirname(__dirname);
 const cleanCmd = path.join(wcePath, 'src/wce-clean');
-const npmCmd = path.join(wcePath, 'src/build-npm');
 const umdCmd = path.join(wcePath, 'src/build-umd');
 const spawnOptions = { stdio: 'inherit' };
 
 process.stdout.write(chalk.gray('---building---', '\n'));
-switch(program.type) {
-  case 'npm':
-    spawn.sync(cleanCmd, ['-p', paths.lib], spawnOptions);
-    spawn.sync(npmCmd, spawnOptions);
-    break;
-  case 'umd':
-    spawn.sync(cleanCmd, ['-p', paths.dist], spawnOptions);
-    spawn.sync(umdCmd, spawnOptions);
-    break;
-  default:
-    spawn.sync(cleanCmd, spawnOptions);
-    spawn.sync(npmCmd, spawnOptions);
-    spawn.sync(umdCmd, spawnOptions);
-}
+spawn.sync(cleanCmd, ['-p', paths.dist], spawnOptions);
+spawn.sync(umdCmd, spawnOptions);
 process.stdout.write(chalk.gray('---building done---', '\n'));
