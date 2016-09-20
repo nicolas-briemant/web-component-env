@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-process.env.NODE_ENV = 'development';
-
 const program = require('commander');
 const path = require('path');
 const childProcess = require('child_process');
@@ -53,7 +51,7 @@ process.env.PORT = program.port || 3000;
 process.env.HOST = program.host || '0.0.0.0';
 
 const wcePath = path.dirname(__dirname);
-const webpackDevServerConfig = path.join(wcePath, 'webpack-config.js');
+const webpackDevServerConfig = path.join(wcePath, 'webpack-config-dev.js');
 const webpackDevServerCmd = path.join(paths.bin, 'webpack-dev-server');
 
 process.stdout.write(chalk.gray('---starting dev env---', '\n'));
