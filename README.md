@@ -6,17 +6,7 @@
 [![npm](https://img.shields.io/npm/l/web-component-env.svg?style=flat-square)]()
 [![npm](https://img.shields.io/npm/v/web-component-env.svg?style=flat-square)]()
 
-Provide an up and running env for developing web components.
-
-> a web component is a react, react/redux component.
-
-## Features
-
-* eslint with airbnb rules
-* es6/7 support (es2015, react, stage-0)
-* tests with mocha and chai
-* hot module reloader dev server
-* postcss with autoprefixer
+Provide an up and running env for developing reusable components for the web.
 
 ## Setup
 
