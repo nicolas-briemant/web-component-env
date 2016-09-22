@@ -2,21 +2,42 @@
 
 const program = require('commander');
 const path = require('path');
-const spawn = require('cross-spawn-async');
 const chalk = require('chalk');
 const paths = require('../default-paths');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const config = require('../webpack-config-umd');
+const package = require(path.resolve('./package.json')); // host package
 
 program.parse(process.argv);
 
-const wcePath = path.dirname(__dirname);
-const configPath = path.join(wcePath, 'webpack-config-umd.js');
-const crossEnvCmd = path.join(paths.bin, 'cross-env');
-const webpackCmd = path.join(paths.bin, 'webpack');
-const webpackCmdAndArgs = [webpackCmd, '--config', configPath];
+function outputFilename(package, externals) {
+  if (!externals) return `${package.name}.js`;
+  return `${package.name}-${package.version}-externals.js`;
+}
 
-process.stdout.write(chalk.gray('---umd---', '\n'));
-process.stdout.write(chalk.blue('   webpack', paths.src, '->', paths.dist, '\n'));
-var webpack = spawn(crossEnvCmd, webpackCmdAndArgs);
-webpack.stdout.on('data', data => process.stdout.write(data.toString()));
-webpack.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
-webpack.on('close', code => process.stdout.write(chalk.gray('---umd done---', '\n')));
+const configs = [
+  merge(
+    config,
+    { output: { filename: outputFilename(package) } }
+  ),
+  merge(
+    config,
+    { output: { filename: outputFilename(package, true) }, externals: package.externals }
+  )
+];
+
+configs.forEach(function(config, i) {
+  webpack(
+    config,
+    function(err, stats) {
+      process.stdout.write(chalk.blue('   webpack', paths.src, '->', config.output.filename, '\n'));
+      if (err) process.stdout.write(chalk.red(err.toString(), '\n'));
+      stats.hasErrors()
+        ? process.stdout.write(chalk.red('   fail (see error below)', '\n'))
+        : process.stdout.write(chalk.green('   success (see report below)', '\n'));      
+      process.stdout.write(chalk.gray(`---log (${config.output.filename})---`, '\n'));
+      console.log(stats.toString({ chunks: false, colors: true }), '\n');
+    }
+  );
+});
