@@ -9,35 +9,42 @@ const merge = require('webpack-merge');
 const config = require('../webpack-config-umd');
 const package = require(path.resolve('./package.json')); // host package
 
-program.parse(process.argv);
+program
+  .option('-l, --lib', 'build library (entry point is index.js and externals are excluded)')
+  .option('-a, --app', 'build application (entry point is app.js and all dependencies are included)')
+  .parse(process.argv);
 
-function outputFilename(package, externals) {
-  if (!externals) return `${package.name}.js`;
-  return `${package.name}-${package.version}-externals.js`;
-}
-
-const configs = [
-  merge(
-    config,
-    { output: { filename: outputFilename(package) } }
-  ),
-  merge(
-    config,
-    { output: { filename: outputFilename(package, true) }, externals: package.externals }
-  )
-];
-
-configs.forEach(function(config, i) {
+function build(type, config, cb) {
+  process.stdout.write(chalk.yellow(`---building ${type}---`, '\n'));
   webpack(
     config,
     function(err, stats) {
-      process.stdout.write(chalk.blue('   webpack', paths.src, '->', config.output.filename, '\n'));
+      process.stdout.write(chalk.blue('webpack', paths.src, '->', paths.dist + '/' + config.output.filename, '\n'));
       if (err) process.stdout.write(chalk.red(err.toString(), '\n'));
       stats.hasErrors()
-        ? process.stdout.write(chalk.red('   fail (see error below)', '\n'))
-        : process.stdout.write(chalk.green('   success (see report below)', '\n'));      
-      process.stdout.write(chalk.gray(`---log (${config.output.filename})---`, '\n'));
-      console.log(stats.toString({ chunks: false, colors: true }), '\n');
+        ? process.stdout.write(chalk.red('fail', '\n'))
+        : process.stdout.write(chalk.green('success', '\n'));
+      process.stdout.write(chalk.gray(`---log---`, '\n'));
+      console.log(stats.toString({ chunks: false, colors: false }));
+      process.stdout.write(chalk.yellow(`---built ${type}---`, '\n'));
+      if (cb) cb();
     }
   );
-});
+}
+
+const configs = {
+  lib: merge(
+    config,
+    { output: { filename: `${package.name}.lib.js` }, externals: package.externals }
+  ),
+  app: merge(
+    config,
+    { output: { filename: `${package.name}.app.js` } }
+  )
+};
+
+// cascading builds
+if (program.lib && program.app) build('lib', configs.lib, function() { build('app', configs.app); });
+else if (program.lib) build('lib', configs.lib);
+else if (program.app) build('app', configs.app);
+else process.stdout.write(chalk.yellow(`choose a build (see --help for details)`, '\n'));
