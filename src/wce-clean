@@ -16,10 +16,10 @@ const cleanCmd = path.join(paths.bin, 'rimraf');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const cleanArgs = pattern;
 
-process.stdout.write(chalk.gray('---cleaning---', '\n'));
-process.stdout.write(chalk.blue('   rimraf', pattern.join(' '), '\n'));
+process.stdout.write(chalk.yellow('---cleaning---', '\n'));
+process.stdout.write(chalk.blue('rimraf', pattern.join(' '), '\n'));
 var clean = spawn(cleanCmd, cleanArgs);
 
 clean.stdout.on('data', data => process.stdout.write(data.toString()));
 clean.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
-clean.on('close', code => process.stdout.write(chalk.gray('---cleaning done---', '\n')));
+clean.on('close', code => process.stdout.write(chalk.yellow('---cleaning done---', '\n')));

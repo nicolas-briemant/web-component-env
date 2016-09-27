@@ -10,11 +10,11 @@ const paths = require('../default-paths');
 const fs = require('fs-extra');
 
 const killHelp = () => {
-  process.stdout.write(chalk.gray('   kill+[enter] to properly end the process', '\n'));
+  process.stdout.write(chalk.yellow('kill+[enter] to properly end the process', '\n'));
 };
 
 const bye = (error, stdout, stderr) => {
-  process.stdout.write(chalk.gray('---goodbye---', '\n'));
+  process.stdout.write(chalk.yellow('---goodbye---', '\n'));
   process.exit();
 };
 
@@ -29,9 +29,9 @@ const clean = () => {
 const kill = (pid) => {
   clean();
   const isWin = /^win/.test(process.platform);
-  process.stdout.write(chalk.gray('---killing dev env---', '\n'));
-  process.stdout.write(chalk.blue('   pid:', pid, '\n'));
-  process.stdout.write(chalk.blue('   platform:', process.platform, '\n'));
+  process.stdout.write(chalk.yellow('---killing dev env---', '\n'));
+  process.stdout.write(chalk.blue('pid:', pid, '\n'));
+  process.stdout.write(chalk.blue('platform:', process.platform, '\n'));
   if (isWin) {
     childProcess.exec('taskkill /PID ' + pid + ' /T /F', bye);
   } else {
@@ -54,7 +54,7 @@ const wcePath = path.dirname(__dirname);
 const webpackDevServerConfig = path.join(wcePath, 'webpack-config-dev.js');
 const webpackDevServerCmd = path.join(paths.bin, 'webpack-dev-server');
 
-process.stdout.write(chalk.gray('---starting dev env---', '\n'));
+process.stdout.write(chalk.yellow('---starting dev env---', '\n'));
 clean();
 fs.copySync(path.join(wcePath, 'index.html'), path.join('build', 'index.html'));
 
@@ -70,7 +70,7 @@ process.stdin.on('readable', () => {
   if (chunk.toString() === 'kill\n') {
     kill(webpackDevServer.pid);
   } else {
-    process.stdout.write(chalk.yellow('   unknown command: ', chunk));
+    process.stdout.write(chalk.red('unknown command: ', chunk));
     killHelp();
   }
 })

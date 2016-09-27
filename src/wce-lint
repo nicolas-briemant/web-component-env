@@ -20,10 +20,10 @@ const lintCmd = path.join(paths.bin, 'eslint');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const lintArgs = pattern.concat('--config', configPath, '--color');
 
-process.stdout.write(chalk.gray('---linting---', '\n'));
-process.stdout.write(chalk.blue('   eslint', pattern.join(' '), '\n'));
+process.stdout.write(chalk.yellow('---linting---', '\n'));
+process.stdout.write(chalk.blue('eslint', pattern.join(' '), '\n'));
 var lint = spawn(lintCmd, lintArgs);
 
 lint.stdout.on('data', data => process.stdout.write(data.toString()));
 lint.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
-lint.on('close', code => process.stdout.write(chalk.gray('---linting done---', '\n')));
+lint.on('close', code => process.stdout.write(chalk.yellow('---linting done---', '\n')));

@@ -34,17 +34,17 @@ const mochaArgs = [
 const nycCmdArgs = [].concat(nycArgs, mochaCmd, mochaArgs);
 const nycArgsLabel = ['--require mochaBabelHookPath'].concat(nycArgs.slice(2)).join(' ');
 
-process.stdout.write(chalk.gray('---testing---', '\n'));
-process.stdout.write(chalk.blue('   nyc', nycArgsLabel, '\n'));
-process.stdout.write(chalk.blue('   mocha', mochaArgs.join(' '), '\n'));
+process.stdout.write(chalk.yellow('---testing---', '\n'));
+process.stdout.write(chalk.blue('nyc', nycArgsLabel, '\n'));
+process.stdout.write(chalk.blue('mocha', mochaArgs.join(' '), '\n'));
 try {
   fs.accessSync('test', fs.F_OK);
   var test = spawn(nycCmd, nycCmdArgs);
   test.stdout.on('data', data => process.stdout.write(data.toString()));
   test.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
-  test.on('close', code => process.stdout.write(chalk.gray('---testing done---', '\n')));
+  test.on('close', code => process.stdout.write(chalk.yellow('---testing done---', '\n')));
 } catch (err) {
-  process.stdout.write(chalk.red('   no test to run', '\n'));
-  process.stdout.write(chalk.gray('---testing done---', '\n'));
+  process.stdout.write(chalk.red('no test to run', '\n'));
+  process.stdout.write(chalk.yellow('---testing done---', '\n'));
 }
 
