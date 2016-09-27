@@ -6,7 +6,7 @@ const common = require('./webpack-config-common');
 
 const buildPath = path.resolve('./dist');
 const srcPath = path.resolve('./src');
-const umdModule = 'index';
+const umdModule = 'lib';
 const umdFilename = umdModule + '.js';
 const umdPath = path.resolve(srcPath, umdModule); // entry point
 

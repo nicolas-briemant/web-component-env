@@ -11,7 +11,10 @@ module.exports = {
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        exclude: path.resolve('./node_modules'),
+        // the common usage want to exclude ./node_modules from transpiling process
+        // but it useful to have when you have es6 modules.
+        // (even if a module should be distributed as es5, let's have a glimpse of the future)
+        //exclude: path.resolve('./node_modules'),
         query: babelConfig
       },
       {
