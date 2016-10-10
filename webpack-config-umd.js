@@ -21,6 +21,11 @@ module.exports = function(umdModule) {
     },
     plugins: [
       new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.DefinePlugin({
+        'process.env': {
+          'NODE_ENV': '"production"'
+        }
+      }),
       new webpack.optimize.UglifyJsPlugin({
         compressor: {
           pure_getters: true,
