@@ -34,11 +34,11 @@ function build(type, config, cb) {
 
 const configs = {
   lib: merge(
-    config,
+    config('lib'),
     { output: { filename: `${package.name}.lib.js` }, externals: package.externals }
   ),
   app: merge(
-    config,
+    config('app'),
     { output: { filename: `${package.name}.app.js` } }
   )
 };
