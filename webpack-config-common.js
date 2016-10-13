@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const babelConfig = require('./babel-config');
 
@@ -6,6 +7,12 @@ module.exports = {
   resolve: {
     extensions: ['', '.jsx', '.js']
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      'Promise': 'es6-promise',
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    })
+  ],
   module: {
     loaders: [
       {
