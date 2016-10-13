@@ -13,7 +13,7 @@ program
   .option('-v, --verbose', 'log built files')
   .parse(process.argv);
 
-const babelCmd = path.join(paths.bin, 'babel');
+const babelCmd = 'babel' // npm 3+ flat install //path.join(paths.bin, 'babel');
 const babelArgs = [
   paths.src,
   '--out-dir',
