@@ -35,7 +35,7 @@ module.exports = {
         loader: 'file-loader'
       },
       {
-        test: /\.(png|jpe?g)$/,
+        test: /\.(gif|png|jpe?g)$/,
         loader: 'url-loader?limit=100000'
       }
     ]
