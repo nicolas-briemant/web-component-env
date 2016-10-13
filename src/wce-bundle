@@ -10,12 +10,12 @@ const config = require('../webpack-config-umd');
 const package = require(path.resolve('./package.json')); // host package
 
 program
-  .option('-l, --lib', 'build library (entry point is index.js and externals are excluded)')
-  .option('-a, --app', 'build application (entry point is app.js and all dependencies are included)')
+  .option('-l, --lib', 'bundle library (entry point is index.js and externals are excluded)')
+  .option('-a, --app', 'bundle application (entry point is app.js and all dependencies are included)')
   .parse(process.argv);
 
-function build(type, config, cb) {
-  process.stdout.write(chalk.yellow(`---building ${type}---`, '\n'));
+function bundle(type, config, cb) {
+  process.stdout.write(chalk.yellow(`---bundling ${type}---`, '\n'));
   webpack(
     config,
     function(err, stats) {
@@ -26,7 +26,7 @@ function build(type, config, cb) {
         : process.stdout.write(chalk.green('success', '\n'));
       process.stdout.write(chalk.gray(`---log---`, '\n'));
       console.log(stats.toString({ chunks: false, colors: false }));
-      process.stdout.write(chalk.yellow(`---built ${type}---`, '\n'));
+      process.stdout.write(chalk.yellow(`---bundled ${type}---`, '\n'));
       if (cb) cb();
     }
   );
@@ -43,8 +43,8 @@ const configs = {
   )
 };
 
-// cascading builds
-if (program.lib && program.app) build('lib', configs.lib, function() { build('app', configs.app); });
-else if (program.lib) build('lib', configs.lib);
-else if (program.app) build('app', configs.app);
-else process.stdout.write(chalk.yellow(`choose a build (see --help for details)`, '\n'));
+// cascading bundles
+if (program.lib && program.app) bundle('lib', configs.lib, function() { bundle('app', configs.app); });
+else if (program.lib) bundle('lib', configs.lib);
+else if (program.app) bundle('app', configs.app);
+else process.stdout.write(chalk.yellow(`choose a bundle (see --help for details)`, '\n'));

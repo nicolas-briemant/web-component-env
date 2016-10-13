@@ -10,7 +10,7 @@ program
   .command('init', 'create folders & files')
   .command('lint', 'eslint following airbnb rules')
   .command('clean', 'cross-platform remove')
-  .command('build', 'compile into npm (lib) and umd (dist) standards')
+  .command('bundle', 'create bundles with webpack')
   .command('start', 'development server with hmr')
   .command('test', 'run tests')
   .parse(process.argv);
