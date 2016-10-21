@@ -8,11 +8,40 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const config = require('../webpack-config-umd');
 const package = require(path.resolve('./package.json')); // host package
+const fs = require('fs-extra');
 
 program
   .option('-l, --lib', 'bundle library (entry point is index.js and externals are excluded)')
   .option('-a, --app', 'bundle application (entry point is app.js and all dependencies are included)')
   .parse(process.argv);
+
+function shipIndex(type, appName, bundleName) {
+  process.stdout.write(chalk.yellow(`---shipping index.html---`, '\n'));
+  const indexName = ['index', type ,'html'].join('.');
+  const sourcePath = path.join('public', indexName);
+  const destPath = path.join('dist', 'index.html');
+
+  try {
+    fs.copySync(sourcePath, destPath);
+  } catch(err) {
+    process.stdout.write(chalk.red('cp', 'unable to ship index.html from ' + sourcePath, '\n'));
+    process.stdout.write(chalk.blue('cp', 'fallback to default index', '\n'));
+    const data = `<!doctype html>
+<html>
+  <head>
+    <title>${appName}</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="${bundleName}"></script>
+  </body>
+</html>`;
+    fs.writeFileSync(destPath, data);
+  }
+
+  process.stdout.write(chalk.yellow(`---shipped---`, '\n'));
+}
 
 function bundle(type, config, cb) {
   process.stdout.write(chalk.yellow(`---bundling ${type}---`, '\n'));
@@ -27,6 +56,7 @@ function bundle(type, config, cb) {
       process.stdout.write(chalk.gray(`---log---`, '\n'));
       console.log(stats.toString({ chunks: false, colors: false }));
       process.stdout.write(chalk.yellow(`---bundled ${type}---`, '\n'));
+      shipIndex(type, package.name, config.output.filename);
       if (cb) cb();
     }
   );
