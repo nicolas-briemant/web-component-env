@@ -9,7 +9,8 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      'Promise': 'exports?global.Promise!es6-promise',
+      // IE requires explicit polyfill -_-
+      //'Promise': 'exports?global.Promise!es6-promise',
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     })
   ],
