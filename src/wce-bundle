@@ -34,7 +34,7 @@ function shipIndex(type, appName, bundleName) {
   </head>
   <body>
     <div id="root"></div>
-    <script src="${bundleName}"></script>
+    <script src="/${bundleName}"></script>
   </body>
 </html>`;
     fs.writeFileSync(destPath, data);
