@@ -1,10 +1,7 @@
-# web-component-env
+# web-component-env [![npm](https://img.shields.io/npm/l/web-component-env.svg?style=flat-square)]() [![David](https://img.shields.io/david/nicolas-briemant/web-component-env.svg?style=flat-square)](https://david-dm.org/nicolas-briemant/web-component-env)
 
-[![David](https://img.shields.io/david/nicolas-briemant/web-component-env.svg?style=flat-square)](https://david-dm.org/nicolas-briemant/web-component-env)
-[![npm](https://img.shields.io/npm/dm/web-component-env.svg?style=flat-square)]()
-[![npm](https://img.shields.io/npm/dt/web-component-env.svg?style=flat-square)]()
-[![npm](https://img.shields.io/npm/l/web-component-env.svg?style=flat-square)]()
-[![npm](https://img.shields.io/npm/v/web-component-env.svg?style=flat-square)]()
+[![NPM](https://nodei.co/npm/web-component-env.png?downloads=true&downloadRank=true)](https://nodei.co/npm/web-component-env/)
+[![NPM](https://nodei.co/npm-dl/web-component-env.png?months=6&height=3)](https://nodei.co/npm/web-component-env/)
 
 Provide an up and running env for developing reusable components for the web.
 
