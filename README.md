@@ -31,13 +31,13 @@ If the development environment has to be updated, this could be spread easily am
 Install it as a devDendency:
 
 ```bash
-# npm i web-component-env --save-dev
+$ npm i web-component-env --save-dev
 ```
 
 Once the installation is done, the main command `wce` is accessible in the `bin` folder of `node_modules`:
 
 ```bash
-# ./node_modules/.bin/wce
+$ ./node_modules/.bin/wce
 ```
 
 A list of available subcommand shoud appear:
