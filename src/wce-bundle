@@ -7,7 +7,7 @@ const paths = require('../default-paths');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const config = require('../webpack-config-umd');
-const statsConfig = requiree('../webpack-config-stats');
+const statsConfig = require('../webpack-config-stats');
 const package = require(path.resolve('./package.json')); // host package
 const fs = require('fs-extra');
 

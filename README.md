@@ -185,6 +185,20 @@ In the `package.json` of the application, a special entry `externals` can be def
 }
 ```
 
+#### stats options
+
+An analyze of the bundle is made by using the options `stats`:
+
+```bash
+$ ./node_modules/.bin/wce bundle -a -s
+# or
+$ ./node_modules/.bin/wce bundle -a --stats
+# or
+$ ./node_modules/.bin/wce bundle -as
+```
+
+When the bundle is shipped, the default local browser is opened with the report.
+
 ## Todo
 
 - [ ] use yarn instead of npm
