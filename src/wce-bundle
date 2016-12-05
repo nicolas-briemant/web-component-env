@@ -7,12 +7,14 @@ const paths = require('../default-paths');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const config = require('../webpack-config-umd');
+const statsConfig = requiree('../webpack-config-stats');
 const package = require(path.resolve('./package.json')); // host package
 const fs = require('fs-extra');
 
 program
   .option('-l, --lib', 'bundle library (entry point is index.js and externals are excluded)')
   .option('-a, --app', 'bundle application (entry point is app.js and all dependencies are included)')
+  .option('-s, --stats', 'provide analyzer report (not exclusive with -a & -l options')
   .parse(process.argv);
 
 function shipIndex(type, appName, bundleName) {
@@ -57,6 +59,7 @@ function bundle(type, config, cb) {
       console.log(stats.toString({ chunks: false, colors: false }));
       process.stdout.write(chalk.yellow(`---bundled ${type}---`, '\n'));
       shipIndex(type, package.name, config.output.filename);
+      if (program.stats) process.stdout.write(chalk.yellow(`---analyzed (follow the link below)---`, '\n'));
       if (cb) cb();
     }
   );
@@ -65,11 +68,13 @@ function bundle(type, config, cb) {
 const configs = {
   lib: merge(
     config('lib'),
-    { output: { filename: `${package.name}.lib.js` }, externals: package.externals }
+    { output: { filename: `${package.name}.lib.js` }, externals: package.externals },
+    (program.stats ? statsConfig : {})
   ),
   app: merge(
     config('app'),
-    { output: { filename: `${package.name}.app.js` } }
+    { output: { filename: `${package.name}.app.js` } },
+    (program.stats ? statsConfig : {})
   )
 };
 
