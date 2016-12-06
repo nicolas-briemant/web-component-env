@@ -208,7 +208,6 @@ When the bundle is shipped, the default local browser is opened with the report.
 
 ## Issues
 
-- [ ] start command does not move assets into build folder
 - [ ] add a test command without coverage for development
 - [ ] sourcemaps sound really big in production bundles
 - [ ] add a way to bundle with a specific config (dev, ci, prod)
