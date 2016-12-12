@@ -12,7 +12,7 @@ const appPath = path.resolve(srcPath, appModule); // entry point
 
 module.exports = merge(common, {
   devtool: 'eval-source-map',
-  entry: appPath,
+  entry: ['babel-polyfill', appPath],
   output: {
     path: buildPath,
     filename: appFilename

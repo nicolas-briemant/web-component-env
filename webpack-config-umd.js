@@ -12,7 +12,7 @@ module.exports = function(umdModule) {
 
   return merge(common, {
     devtool: 'cheap-module-source-map',
-    entry: umdPath,
+    entry: ['babel-polyfill', umdPath],
     output: {
       path: buildPath,
       filename: umdFilename,

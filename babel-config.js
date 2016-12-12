@@ -8,5 +8,5 @@ const commonImports = [
 
 module.exports = {
   "presets": ["react", "es2015", "stage-0"],
-  "plugins": ["transform-decorators-legacy", ["import", commonImports]]
+  "plugins": ["transform-runtime", "transform-decorators-legacy", ["import", commonImports]]
 };
