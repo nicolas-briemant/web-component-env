@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const babelConfig = require('./babel-config');
 
 module.exports = {
@@ -9,7 +8,6 @@ module.exports = {
     extensions: ['', '.jsx', '.js']
   },
   plugins: [
-    new LodashModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     })
