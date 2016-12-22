@@ -10,7 +10,7 @@ const paths = require('../default-paths');
 const fs = require('fs-extra');
 
 const killHelp = () => {
-  process.stdout.write(chalk.yellow('kill+[enter] to properly end the process', '\n'));
+  process.stdout.write(chalk.magenta('kill+[enter] to properly end the process', '\n'));
 };
 
 const bye = (error, stdout, stderr) => {
@@ -45,13 +45,17 @@ const kill = (pid) => {
 program
   .option('-h, --host <n>', 'set the host')
   .option('-p, --port <n>', 'set the port', parseInt)
+  .option('-i, --cssmodules', 'apply cssmodules compilation')
   .parse(process.argv);
 
 process.env.PORT = program.port || 3000;
 process.env.HOST = program.host || '0.0.0.0';
 
 const wcePath = path.dirname(__dirname);
-const webpackDevServerConfig = path.join(wcePath, 'webpack-config-dev.js');
+const webpackDevServerConfig = path.join(
+  wcePath,
+  `webpack-config-dev${program.cssmodules ? '-icss' : ''}.js`
+);
 const webpackDevServerCmd = path.join(paths.bin, 'webpack-dev-server');
 
 process.stdout.write(chalk.yellow('---starting dev env---', '\n'));

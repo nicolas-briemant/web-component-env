@@ -4,13 +4,13 @@ const merge = require('webpack-merge');
 
 const common = require('./webpack-config-common');
 
-module.exports = function(umdModule) {
+module.exports = function(umdModule, icss) {
   const buildPath = path.resolve('./dist');
   const srcPath = path.resolve('./src');
   const umdFilename = umdModule + '.js';
   const umdPath = path.resolve(srcPath, umdModule); // entry point
 
-  return merge(common, {
+  return merge(common(icss), {
     devtool: 'cheap-module-source-map',
     entry: ['babel-polyfill', umdPath],
     output: {
