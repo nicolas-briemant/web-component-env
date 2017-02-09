@@ -13,5 +13,5 @@ program
   .command('bundle', 'create bundles with webpack')
   .command('start', 'development server with hmr')
   .command('test', 'run tests')
-  .command('install', 'transpile es6 into es5 with babel')
+  .command('build', 'transpile es6 into es5 with babel (npm dependency usage)')
   .parse(process.argv);
