@@ -1,4 +1,6 @@
-# web-component-env [![npm](https://img.shields.io/npm/l/web-component-env.svg?style=flat-square)]()
+![paperplane](/paperplane.jpg)
+
+# web-component-env
 [![NPM](https://nodei.co/npm/web-component-env.png?downloads=true&downloadRank=true)](https://nodei.co/npm/web-component-env/)
 [![NPM](https://nodei.co/npm-dl/web-component-env.png?months=6&height=3)](https://nodei.co/npm/web-component-env/)
 
