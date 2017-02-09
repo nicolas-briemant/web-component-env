@@ -34,7 +34,6 @@ const gitIgnored = [
   'npm-debug.log',
   'build',
   'dist',
-  'lib',
   '.nyc_output'
 ];
 process.stdout.write(chalk.blue('   .gitignore', '\n'));
