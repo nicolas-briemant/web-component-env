@@ -10,7 +10,7 @@ const paths = require('../default-paths');
 const fs = require('fs-extra');
 
 const killHelp = () => {
-  process.stdout.write(chalk.yellow('kill+[enter] to properly end the process', '\n'));
+  process.stdout.write(chalk.magenta('kill+[enter] to properly end the process', '\n'));
 };
 
 const bye = (error, stdout, stderr) => {

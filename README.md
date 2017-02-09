@@ -19,8 +19,8 @@ If the development environment has to be updated, this could be spread easily am
   1. [lint](#lint)
   1. [test](#test)
   1. [bundle](#bundle)
-1. [Todo](#todo)
-1. [Issues](#issues)
+1. [Transversal features](#features)
+  1. [Analyzer](#analyzer)
 
 ## Features
 * [webpack](https://github.com/webpack/webpack)
@@ -185,7 +185,9 @@ In the `package.json` of the application, a special entry `externals` can be def
 }
 ```
 
-#### stats options
+## Transversal features
+
+### Analyzer
 
 An analyze of the bundle is made by using the options `stats`:
 
