@@ -19,7 +19,7 @@ If the development environment has to be updated, this could be spread easily am
   1. [lint](#lint)
   1. [test](#test)
   1. [bundle](#bundle)
-  1. [build](#lib)
+  1. [build](#build)
 1. [Transversal features](#features)
   1. [Analyzer](#analyzer)
 
