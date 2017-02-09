@@ -213,16 +213,3 @@ $ ./node_modules/.bin/wce bundle -as
 ```
 
 When the bundle is shipped, the default local browser is opened with the report.
-
-## Todo
-
-- [ ] use yarn instead of npm
-- [ ] update to webpack2
-- [ ] add a way to override default webpack configuration (paths, vendors, splits)
-- [ ] add a way to override eslint rules
-
-## Issues
-
-- [ ] add a test command without coverage for development
-- [ ] sourcemaps sound really big in production bundles
-- [ ] add a way to bundle with a specific config (dev, ci, prod)
