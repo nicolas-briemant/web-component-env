@@ -19,6 +19,7 @@ If the development environment has to be updated, this could be spread easily am
   1. [lint](#lint)
   1. [test](#test)
   1. [bundle](#bundle)
+  1. [build](#lib)
 1. [Transversal features](#features)
   1. [Analyzer](#analyzer)
 
@@ -55,6 +56,7 @@ A list of available subcommand shoud appear:
 |`lint`|lint all `.js` files|
 |`test`|runs unit tests with mocha and generates coverage report with nyc|
 |`bundle`|compiles the application to disk|
+|`build`|transpile es6 into es5 with babel (npm dependency usage)|
 
 *find below detailed documentation about the commands*
 
@@ -184,6 +186,15 @@ In the `package.json` of the application, a special entry `externals` can be def
   }
 }
 ```
+
+### build
+
+```bash
+$ ./node_modules/.bin/wce build
+```
+
+Transpile es6 into es5 with babel (npm dependency usage) in `lib/`.  
+`lib/` should not be ignored by git.
 
 ## Transversal features
 
