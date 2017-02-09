@@ -1,4 +1,4 @@
-![paperplane](/paperplane.jpg)
+![paperplane](/paperplane.png)
 
 # web-component-env
 [![NPM](https://nodei.co/npm/web-component-env.png?downloads=true&downloadRank=true)](https://nodei.co/npm/web-component-env/)
