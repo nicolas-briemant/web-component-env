@@ -10,7 +10,7 @@ const appModule = 'app';
 const appFilename = appModule + '.js';
 const appPath = path.resolve(srcPath, appModule); // entry point
 
-module.exports = merge(common(false), {
+module.exports = merge(common, {
   devtool: 'eval-source-map',
   entry: ['babel-polyfill', appPath],
   output: {

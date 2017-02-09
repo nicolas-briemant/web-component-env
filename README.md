@@ -19,9 +19,6 @@ If the development environment has to be updated, this could be spread easily am
   1. [lint](#lint)
   1. [test](#test)
   1. [bundle](#bundle)
-1. [Transversal features](#features)
-  1. [Analyzer](#analyzer)
-  1. [CSS Modules](#css-modules)
 1. [Todo](#todo)
 1. [Issues](#issues)
 
@@ -32,7 +29,6 @@ If the development environment has to be updated, this could be spread easily am
 * [chai](http://chaijs.com/)
 * [eslint](http://eslint.org)
 * [less](http://lesscss.org/)
-* [css-modules](https://github.com/css-modules/css-modules)
 
 ## Requirements
 * node `^4.4.0`
@@ -189,11 +185,9 @@ In the `package.json` of the application, a special entry `externals` can be def
 }
 ```
 
-## Transversal features
+#### stats options
 
-### Analyzer
-
-An analyze of the bundle is made by using the option `stats`:
+An analyze of the bundle is made by using the options `stats`:
 
 ```bash
 $ ./node_modules/.bin/wce bundle -a -s
@@ -204,20 +198,6 @@ $ ./node_modules/.bin/wce bundle -as
 ```
 
 When the bundle is shipped, the default local browser is opened with the report.
-
-### CSS Modules
-
-CSS modules compilation can be used by using the option `cssmodules`:
-
-```bash
-$ ./node_modules/.bin/wce start --cssmodules
-# or
-$ ./node_modules/.bin/wce bundle -a --cssmodules
-# or
-$ ./node_modules/.bin/wce bundle -ai
-```
-
-The feature is available for `start` and `bundle` command.
 
 ## Todo
 

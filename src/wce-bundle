@@ -14,8 +14,7 @@ const fs = require('fs-extra');
 program
   .option('-l, --lib', 'bundle library (entry point is index.js and externals are excluded)')
   .option('-a, --app', 'bundle application (entry point is app.js and all dependencies are included)')
-  .option('-s, --stats', 'provide analyzer report (not exclusive with -a & -l options)')
-  .option('-i, --cssmodules', 'apply cssmodules compilation (not exclusive with -a & -l options)')
+  .option('-s, --stats', 'provide analyzer report (not exclusive with -a & -l options')
   .parse(process.argv);
 
 function shipIndex(type, appName, bundleName) {
@@ -68,12 +67,12 @@ function bundle(type, config, cb) {
 
 const configs = {
   lib: merge(
-    config('lib', program.cssmodules),
+    config('lib'),
     { output: { filename: `${package.name}.lib.js` }, externals: package.externals },
     (program.stats ? statsConfig : {})
   ),
   app: merge(
-    config('app', program.cssmodules),
+    config('app'),
     { output: { filename: `${package.name}.app.js` } },
     (program.stats ? statsConfig : {})
   )
