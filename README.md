@@ -149,7 +149,7 @@ There are 2 different bundles that serves different purposes.
 The application bundle is used for stand-alone applications.
 
 ```bash
-$ ./node_modules/.bin/wce bundle --application
+$ ./node_modules/.bin/wce bundle --app
 # or
 $ ./node_modules/.bin/wce bundle -a
 ```
