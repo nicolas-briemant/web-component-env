@@ -15,19 +15,22 @@ program
   .option('-l, --lib', 'bundle library (entry point is index.js and externals are excluded)')
   .option('-a, --app', 'bundle application (entry point is app.js and all dependencies are included)')
   .option('-s, --stats', 'provide analyzer report (not exclusive with -a & -l options')
+  .option('-b, --bundle-version [value]', 'provide bundle version number for generated files', 0)
+  .option('-r, --relative', 'make bundle index path relative to bundled JS files')
   .parse(process.argv);
 
 function shipIndex(type, appName, bundleName) {
   process.stdout.write(chalk.yellow(`---shipping index.html---`, '\n'));
-  const indexName = ['index', type ,'html'].join('.');
+  const indexName = ['index', type, 'html'].join('.');
   const sourcePath = path.join('public', indexName);
   const destPath = path.join('dist', 'index.html');
 
   try {
     fs.copySync(sourcePath, destPath);
-  } catch(err) {
+  } catch (err) {
     process.stdout.write(chalk.red('cp', 'unable to ship index.html from ' + sourcePath, '\n'));
     process.stdout.write(chalk.blue('cp', 'fallback to default index', '\n'));
+
     const data = `<!doctype html>
 <html>
   <head>
@@ -36,7 +39,7 @@ function shipIndex(type, appName, bundleName) {
   </head>
   <body>
     <div id="root"></div>
-    <script src="${bundleName}"></script>
+    <script src="${program.relative ? '.' : ''}/${bundleName}"></script>
   </body>
 </html>`;
     fs.writeFileSync(destPath, data);
@@ -49,14 +52,14 @@ function bundle(type, config, cb) {
   process.stdout.write(chalk.yellow(`---bundling ${type}---`, '\n'));
   webpack(
     config,
-    function(err, stats) {
+    function (err, stats) {
       process.stdout.write(chalk.blue('webpack', paths.src, '->', paths.dist + '/' + config.output.filename, '\n'));
       if (err) process.stdout.write(chalk.red(err.toString(), '\n'));
       stats.hasErrors()
         ? process.stdout.write(chalk.red('fail', '\n'))
         : process.stdout.write(chalk.green('success', '\n'));
       process.stdout.write(chalk.gray(`---log---`, '\n'));
-      console.log(stats.toString({ chunks: false, colors: false }));
+      console.log(stats.toString({chunks: false, colors: false}));
       process.stdout.write(chalk.yellow(`---bundled ${type}---`, '\n'));
       shipIndex(type, package.name, config.output.filename);
       if (program.stats) process.stdout.write(chalk.yellow(`---analyzed (follow the link below)---`, '\n'));
@@ -65,21 +68,27 @@ function bundle(type, config, cb) {
   );
 }
 
+function getBundleVersion(program) {
+  return program.bundleVersion ? `-${program.bundleVersion}` : '';
+}
+
 const configs = {
   lib: merge(
     config('lib'),
-    { output: { filename: `${package.name}.lib.js` }, externals: package.externals },
+    {output: {filename: `${package.name}${getBundleVersion(program)}.lib.js`}, externals: package.externals},
     (program.stats ? statsConfig : {})
   ),
   app: merge(
     config('app'),
-    { output: { filename: `${package.name}.app.js` } },
+    {output: {filename: `${package.name}${getBundleVersion(program)}.app.js`}},
     (program.stats ? statsConfig : {})
   )
 };
 
 // cascading bundles
-if (program.lib && program.app) bundle('lib', configs.lib, function() { bundle('app', configs.app); });
+if (program.lib && program.app) bundle('lib', configs.lib, function () {
+  bundle('app', configs.app);
+});
 else if (program.lib) bundle('lib', configs.lib);
 else if (program.app) bundle('app', configs.app);
 else process.stdout.write(chalk.yellow(`choose a bundle (see --help for details)`, '\n'));
