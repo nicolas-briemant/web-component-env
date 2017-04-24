@@ -1,9 +1,15 @@
 {
   "name": "web-component-env",
   "description": "front-end development boilerplate",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "registry": "https://dev-entrep-1.main.oecd.org/nexus/content/repositories/components-snapshot/",
+    "always-auth": true,
+    "_auth": "dGVzdDp0ZXN0",
+    "email": "nicolas.briemant@oecd.org"
   },
   "keywords": [
     "react",
