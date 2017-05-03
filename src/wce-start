@@ -4,19 +4,10 @@ const program = require('commander');
 const path = require('path');
 const childProcess = require('child_process');
 const chalk = require('chalk');
-const treeKill = require('tree-kill');
 const spawn = require('cross-spawn');
 const paths = require('../default-paths');
 const fs = require('fs-extra');
-
-const killHelp = () => {
-  process.stdout.write(chalk.magenta('kill+[enter] to properly end the process', '\n'));
-};
-
-const bye = (error, stdout, stderr) => {
-  process.stdout.write(chalk.yellow('---goodbye---', '\n'));
-  process.exit();
-};
+const utils = require('./utils');
 
 const clean = () => {
   spawn.sync(
@@ -24,22 +15,6 @@ const clean = () => {
     ['--pattern', paths.build],
     { stdio: 'inherit' }
   );
-};
-
-const kill = (pid) => {
-  clean();
-  const isWin = /^win/.test(process.platform);
-  process.stdout.write(chalk.yellow('---killing dev env---', '\n'));
-  process.stdout.write(chalk.blue('pid:', pid, '\n'));
-  process.stdout.write(chalk.blue('platform:', process.platform, '\n'));
-  if (isWin) {
-    childProcess.exec('taskkill /PID ' + pid + ' /T /F', bye);
-  } else {
-    treeKill(pid, 'SIGTERM', (err) => {
-      if (err) process.stdout.write(chalk.red(err, '\n'));
-      bye();
-    });
-  }
 };
 
 program
@@ -58,7 +33,7 @@ process.stdout.write(chalk.yellow('---starting dev env---', '\n'));
 clean();
 fs.copySync(path.join(wcePath, 'index.html'), path.join('build', 'index.html'));
 
-killHelp();
+utils.killHelp();
 var webpackDevServer = childProcess.exec([
   webpackDevServerCmd,
   '--config', webpackDevServerConfig
@@ -68,11 +43,12 @@ process.stdin.on('readable', () => {
   var chunk = process.stdin.read();
   if (!chunk) return;
   if (chunk.toString() === 'kill\n') {
-    kill(webpackDevServer.pid);
+    clean();
+    utils.kill(webpackDevServer.pid);
   } else {
     process.stdout.write(chalk.red('unknown command: ', chunk));
     killHelp();
   }
-})
+});
 webpackDevServer.stdout.on('data', data => process.stdout.write(data.toString()));
 webpackDevServer.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));

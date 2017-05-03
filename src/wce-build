@@ -8,9 +8,11 @@ const fs = require('fs-extra');
 const babelConfig = require('../babel-config');
 const paths = require('../default-paths');
 const _ = require('lodash');
+const utils = require('./utils');
 
 program
   .option('-v, --verbose', 'log built files')
+  .option('-w, --watch', 'copy assets only once, build and watch for changes')
   .parse(process.argv);
 
 const babelCmd = path.join(paths.bin, 'babel');
@@ -24,16 +26,30 @@ const babelArgs = [
   _.initial(babelConfig.plugins).join(',')
 ];
 
+if (program.watch) babelArgs.push('--watch');
+
 process.stdout.write(chalk.yellow('---build---', '\n'));
 process.stdout.write(chalk.blue('babel', babelArgs.join(' '), '\n'));
 
 try {
+  process.stdout.write(chalk.magenta('copy assets (not watched)', '\n'));
   fs.copySync(path.join(paths.src, 'assets'), path.join(paths.lib, 'assets'));
 } catch(err) {
   process.stdout.write(chalk.red('cp', 'unable to cp assets', '\n'));
 }
 
+if (program.watch) utils.killHelp();
 var babel = spawn(babelCmd, babelArgs);
+process.stdin.on('readable', () => {
+  var chunk = process.stdin.read();
+  if (!chunk) return;
+  if (chunk.toString() === 'kill\n') {
+    utils.kill(babel.pid);
+  } else {
+    process.stdout.write(chalk.red('unknown command: ', chunk));
+    utils.killHelp();
+  }
+});
 
 if (program.verbose) babel.stdout.on('data', data => process.stdout.write(data.toString()));
 babel.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
