@@ -38,18 +38,20 @@ try {
   process.stdout.write(chalk.red('cp', 'unable to cp assets', '\n'));
 }
 
-if (program.watch) utils.killHelp();
 var babel = spawn(babelCmd, babelArgs);
-process.stdin.on('readable', () => {
-  var chunk = process.stdin.read();
-  if (!chunk) return;
-  if (chunk.toString() === 'kill\n') {
-    utils.kill(babel.pid);
-  } else {
-    process.stdout.write(chalk.red('unknown command: ', chunk));
-    utils.killHelp();
-  }
-});
+if (program.watch) {
+  utils.killHelp();
+  process.stdin.on('readable', () => {
+    var chunk = process.stdin.read();
+    if (!chunk) return;
+    if (chunk.toString() === 'kill\n') {
+      utils.kill(babel.pid);
+    } else {
+      process.stdout.write(chalk.red('unknown command: ', chunk));
+      utils.killHelp();
+    }
+  });
+}
 
 if (program.verbose) babel.stdout.on('data', data => process.stdout.write(data.toString()));
 babel.stderr.on('data', data => process.stdout.write(chalk.red(data.toString(), '\n')));
