@@ -193,6 +193,8 @@ In the `package.json` of the application, a special entry `externals` can be def
 
 ```bash
 $ ./node_modules/.bin/wce build
+# or
+$ ./node_modules/.bin/wce build -w
 ```
 
 Transpile es6 into es5 with babel (npm dependency usage) in `lib/`.  
