@@ -61,34 +61,37 @@ function bundle(type, config, cb) {
       process.stdout.write(chalk.gray(`---log---`, '\n'));
       console.log(stats.toString({chunks: false, colors: false}));
       process.stdout.write(chalk.yellow(`---bundled ${type}---`, '\n'));
-      shipIndex(type, package.name, config.output.filename);
+      if (program.relative || program.bundleVersion) shipIndex(type, package.name, config.output.filename);
       if (program.stats) process.stdout.write(chalk.yellow(`---analyzed (follow the link below)---`, '\n'));
       if (cb) cb();
     }
   );
 }
 
-function getBundleVersion(program) {
-  return program.bundleVersion ? `-${program.bundleVersion}` : '';
+// side note: program.bundleVersion ? will be false for version 0 because 0 is falsy
+function configFactory(type, program) {
+  return merge(
+    config(type),
+    program.bundleVersion || program.relative
+      ? {
+          output: {
+            filename: `${package.name}${program.bundleVersion ? `-${program.bundleVersion}` : ''}.${type}.js`,
+            externals: type === 'lib' ? package.externals : {}
+          }
+        }
+      : {},
+    program.stats ? statsConfig : {}
+  );
 }
 
-const configs = {
-  lib: merge(
-    config('lib'),
-    {output: {filename: `${package.name}${getBundleVersion(program)}.lib.js`}, externals: package.externals},
-    (program.stats ? statsConfig : {})
-  ),
-  app: merge(
-    config('app'),
-    {output: {filename: `${package.name}${getBundleVersion(program)}.app.js`}},
-    (program.stats ? statsConfig : {})
-  )
-};
-
 // cascading bundles
-if (program.lib && program.app) bundle('lib', configs.lib, function () {
-  bundle('app', configs.app);
-});
-else if (program.lib) bundle('lib', configs.lib);
-else if (program.app) bundle('app', configs.app);
+if (program.lib && program.app) {
+  bundle(
+    'lib',
+    configFactory('lib', program),
+    bundle('app', configFactory('app', program))
+  );
+}
+else if (program.lib) bundle('lib', configFactory('lib', program));
+else if (program.app) bundle('app', configFactory('app', program));
 else process.stdout.write(chalk.yellow(`choose a bundle (see --help for details)`, '\n'));
