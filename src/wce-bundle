@@ -61,7 +61,7 @@ function bundle(type, config, cb) {
       process.stdout.write(chalk.gray(`---log---`, '\n'));
       console.log(stats.toString({chunks: false, colors: false}));
       process.stdout.write(chalk.yellow(`---bundled ${type}---`, '\n'));
-      if (program.relative || program.bundleVersion) shipIndex(type, package.name, config.output.filename);
+      if (program.bundleVersion) shipIndex(type, package.name, config.output.filename);
       if (program.stats) process.stdout.write(chalk.yellow(`---analyzed (follow the link below)---`, '\n'));
       if (cb) cb();
     }
@@ -71,8 +71,8 @@ function bundle(type, config, cb) {
 // side note: program.bundleVersion ? will be false for version 0 because 0 is falsy
 function configFactory(type, program) {
   return merge(
-    config(type),
-    program.bundleVersion || program.relative
+    config(type, program.relative),
+    program.bundleVersion
       ? {
           output: {
             filename: `${package.name}${program.bundleVersion ? `-${program.bundleVersion}` : ''}.${type}.js`,

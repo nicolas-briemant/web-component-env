@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const common = require('./webpack-config-common');
 
-module.exports = function(umdModule) {
+module.exports = function(umdModule, relative) {
   const rootPath = path.dirname(__dirname); // context !
   const templatePath = path.resolve(rootPath, 'web-component-env' , 'index.html');
   const buildPath = path.resolve('./dist');
@@ -17,8 +17,8 @@ module.exports = function(umdModule) {
     entry: ['babel-polyfill', umdPath],
     output: {
       path: buildPath,
-      filename: '[name].[chunkhash].js',
-      chunkFilename: '[name].[chunkhash].chunk.js',
+      filename: (relative ? '' : '/') + '[name].[chunkhash].js',
+      chunkFilename: (relative ? '' : '/') + '[name].[chunkhash].chunk.js',
       libraryTarget: 'umd',
       umdNamedDefine: true
     },
