@@ -11,9 +11,10 @@ module.exports = function(umdModule, relative) {
   const buildPath = path.resolve('./dist');
   const srcPath = path.resolve('./src');
   const umdPath = path.resolve(srcPath, umdModule); // entry point
+  const isDevVersion = process.env.NODE_ENV === 'development';
 
   return merge(common, {
-    devtool: 'cheap-module-source-map',
+    devtool: isDevVersion ? 'eval-source-map' : 'cheap-module-source-map',
     entry: ['babel-polyfill', umdPath],
     output: {
       path: buildPath,
@@ -52,7 +53,8 @@ module.exports = function(umdModule, relative) {
           unsafe: true,
           unsafe_comps: true,
           warnings: false
-        }
+        },
+        sourceMap: isDevVersion
       })
     ]
   });
