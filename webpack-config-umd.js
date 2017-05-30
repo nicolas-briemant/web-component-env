@@ -43,7 +43,8 @@ module.exports = function(umdModule, relative) {
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': JSON.stringify(process.env.NODE_ENV) || '"production"'
+          'NODE_ENV': JSON.stringify(process.env.NODE_ENV) || '"production"',
+          'APP_ENV': JSON.stringify(process.env.APP_ENV)
         }
       }),
       new webpack.optimize.UglifyJsPlugin({
