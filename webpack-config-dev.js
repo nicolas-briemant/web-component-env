@@ -17,7 +17,8 @@ module.exports = merge(common, {
   entry: ['babel-polyfill', appPath],
   output: {
     path: buildPath,
-    filename: appFilename
+    filename: appFilename,
+    publicPath: '/'
   },
   devServer: {
     contentBase: buildPath,
