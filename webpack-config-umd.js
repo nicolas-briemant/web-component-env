@@ -44,7 +44,8 @@ module.exports = function(umdModule, relative) {
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': JSON.stringify(process.env.NODE_ENV) || '"production"',
-          'APP_ENV': JSON.stringify(process.env.APP_ENV)
+          'APP_ENV': JSON.stringify(process.env.APP_ENV),
+          'TARGET_ENV': JSON.stringify(process.env.TARGET_ENV),
         }
       }),
       new webpack.optimize.UglifyJsPlugin({
