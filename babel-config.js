@@ -4,6 +4,7 @@ module.exports = {
     "transform-runtime",
     "transform-decorators-legacy",
     "lodash",
+    "dynamic-import-node",
     ["import", { libraryName: "antd" }]
   ]
 };
