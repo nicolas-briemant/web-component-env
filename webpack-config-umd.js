@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const common = require('./webpack-config-common');
 
@@ -14,7 +15,7 @@ module.exports = function(umdModule, relative) {
   const isDevVersion = process.env.NODE_ENV === 'development';
 
   return merge(common, {
-    devtool: isDevVersion ? 'eval-source-map' : 'cheap-module-source-map',
+    devtool: isDevVersion ? 'eval-source-map' : 'source-map',
     entry: ['babel-polyfill', umdPath],
     output: {
       path: buildPath,
@@ -49,14 +50,23 @@ module.exports = function(umdModule, relative) {
           'TARGET_ENV': JSON.stringify(process.env.TARGET_ENV),
         }
       }),
+      new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compressor: {
           pure_getters: true,
           unsafe: true,
-          unsafe_comps: true,
+          //unsafe_comps: true,
           warnings: false
         },
-        sourceMap: isDevVersion
+        sourceMap: true,
+      }),
+      new webpack.optimize.AggressiveMergingPlugin(),
+      new CompressionPlugin({
+        asset: "[path].gz[query]",
+        algorithm: "gzip",
+        test: /\.js$|\.css$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8
       })
     ]
   });
