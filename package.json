@@ -1,7 +1,7 @@
 {
   "name": "web-component-env",
   "description": "front-end development boilerplate",
-  "version": "2.9.3",
+  "version": "2.9.4",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -53,6 +53,7 @@
     "chai-equal-jsx": "^1.0.9",
     "chalk": "^1.1.1",
     "commander": "^2.9.0",
+    "compression-webpack-plugin": "^1.0.1",
     "cross-env": "^1.0.7",
     "cross-spawn": "^2.1.5",
     "cross-spawn-async": "^2.1.9",
