@@ -45,6 +45,10 @@ module.exports = {
         loader: 'url-loader?limit=100000?fallback=file-loader'
       },
       {
+        test: /\.ico$/,
+        loader: 'file-loader?name=[name].[ext]'
+      }
+      {
         test: /\.inline\.svg$/,
         loader: 'url-loader?limit=1000000?fallback=file-loader'
       }
