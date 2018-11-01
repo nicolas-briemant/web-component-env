@@ -10,9 +10,11 @@ const defaultPattern = [paths.lib, paths.dist];
 
 program
   .option('-p, --pattern [file|dir|glob]*', 'clean a specific pattern')
+  .option('-b, --bin', 'specify a bin prefix (lerna)')
   .parse(process.argv);
 
-const cleanCmd = path.join(paths.bin, 'rimraf');
+const binPath = program.bin ? path.join(program.bin, paths.bin) : paths.bin;
+const cleanCmd = path.join(binPath, 'rimraf');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const cleanArgs = pattern;
 

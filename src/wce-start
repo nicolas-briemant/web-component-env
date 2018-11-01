@@ -20,14 +20,16 @@ const clean = () => {
 program
   .option('-h, --host <n>', 'set the host')
   .option('-p, --port <n>', 'set the port', parseInt)
+  .option('-b, --bin', 'specify a bin prefix (lerna)')
   .parse(process.argv);
 
 process.env.PORT = program.port || 3000;
 process.env.HOST = program.host || '0.0.0.0';
 
 const wcePath = path.dirname(__dirname);
+const binPath = program.bin ? path.join(program.bin, paths.bin) : paths.bin;
 const webpackDevServerConfig = path.join(wcePath, 'webpack-config-dev.js');
-const webpackDevServerCmd = path.join(paths.bin, 'webpack-dev-server');
+const webpackDevServerCmd = path.join(binPath, 'webpack-dev-server');
 
 process.stdout.write(chalk.yellow('---starting dev env---', '\n'));
 clean();

@@ -12,12 +12,14 @@ const defaultPattern = [TEST];
 
 program
   .option('-p, --pattern [file|dir|glob]*', 'test a specific pattern')
+  .option('-b, --bin', 'specify a bin prefix (lerna)')
   .parse(process.argv);
 
 const wcePath = path.dirname(__dirname);
 const mochaBabelHookPath = path.join(wcePath, 'mocha-babel-hook');
-const nycCmd = path.join(paths.bin, 'nyc');
-const mochaCmd = path.join(paths.bin, '_mocha');
+const binPath = program.bin ? path.join(program.bin, paths.bin) : paths.bin;
+const nycCmd = path.join(binPath, 'nyc');
+const mochaCmd = path.join(binPath, '_mocha');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const nycArgs = [
   '--require', mochaBabelHookPath,

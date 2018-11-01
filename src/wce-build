@@ -13,9 +13,11 @@ const utils = require('./utils');
 program
   .option('-v, --verbose', 'log built files')
   .option('-w, --watch', 'copy assets only once, build and watch for changes')
+  .option('-b, --bin', 'specify a bin prefix (lerna)')
   .parse(process.argv);
 
-const babelCmd = path.join(paths.bin, 'babel');
+const binPath = program.bin ? path.join(program.bin, paths.bin) : paths.bin;
+const babelCmd = path.join(binPath, 'babel');
 const babelArgs = [
   paths.src,
   '--out-dir',

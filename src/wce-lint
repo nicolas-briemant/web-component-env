@@ -12,11 +12,13 @@ const defaultPattern = [SRC, TEST];
 
 program
   .option('-p, --pattern [file|dir|glob]*', 'eslint a specific pattern')
+  .option('-b, --bin', 'specify a bin prefix (lerna)')
   .parse(process.argv);
 
 const wcePath = path.dirname(__dirname);
 const configPath = path.join(wcePath, '.eslintrc');
-const lintCmd = path.join(paths.bin, 'eslint');
+const binPath = program.bin ? path.join(program.bin, paths.bin) : paths.bin;
+const lintCmd = path.join(binPath, 'eslint');
 const pattern = program.pattern ? [program.pattern] : defaultPattern;
 const lintArgs = pattern.concat('--config', configPath, '--color');
 
