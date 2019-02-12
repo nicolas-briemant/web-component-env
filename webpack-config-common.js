@@ -37,10 +37,6 @@ module.exports = {
         loader: 'url-loader?limit=10000&mimetype=application/font-woff'
       },
       {
-        test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader'
-      },
-      {
         test: /\.(gif|png|jpe?g)$/,
         loader: 'url-loader?limit=100000?fallback=file-loader'
       },
@@ -51,7 +47,11 @@ module.exports = {
       {
         test: /\.inline\.svg$/,
         loader: 'url-loader?limit=1000000?fallback=file-loader'
-      }
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader'
+      },
     ]
   },
   postcss: [
